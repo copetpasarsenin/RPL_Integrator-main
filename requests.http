@@ -1,0 +1,41 @@
+### Konfigurasi Variabel
+@baseUrl = http://localhost:3000
+# TODO: Ganti value @token dengan hasil output dari file generate-token.js
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNzE0MjQwMDYxIiwicm9sZSI6ImNsaWVudF9hcHAiLCJpYXQiOjE3Nzc4MDA0NzYsImV4cCI6MTc3NzgwNDA3Nn0.1Qk1quQSdqqLqfERmH5F4AwkJjMw1MFxHfDKeiaja1w
+
+
+### ====================================================
+### TEST 1: Request ke API Gateway untuk service SmartBank
+### Fitur: Routing (Fitur 1) dan Pemotongan Fee (Fitur 4)
+### ====================================================
+POST {{baseUrl}}/api/smartbank/api/v1/pembayaran
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "user_id": "714240061",
+    "amount": 50000,
+    "parameter": "Pembayaran UKT"
+}
+
+
+### ====================================================
+### TEST 2: Request ke API Gateway untuk service Marketplace
+### Fitur: Parameter GET juga harus berhasil diteruskan
+### ====================================================
+GET {{baseUrl}}/api/marketplace/products?category=elektronik&limit=10
+Authorization: Bearer {{token}}
+
+
+### ====================================================
+### TEST 3: Menggunakan Prefix /integrator
+### Gateway kita mendukung dua prefix (/api dan /integrator)
+### ====================================================
+POST {{baseUrl}}/integrator/akademik/mahasiswa/update
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "npm": "714240061",
+    "status": "Aktif"
+}
